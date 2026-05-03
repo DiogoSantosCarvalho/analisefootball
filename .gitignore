@@ -1,0 +1,42 @@
+# Model files (too large for GitHub)
+*.pt
+*.pth
+*.onnx
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Output files
+output/
+!output/
+analysis_output/
+*.mp4
+*.avi
+!output/.gitkeep
+
+# Data
+inputvideo/
+!inputvideo/
+*.jpg
+*.png
+!inputvideo/.gitkeep
+
+
+

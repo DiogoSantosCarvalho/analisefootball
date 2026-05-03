@@ -1,0 +1,106 @@
+{
+  "analysis_config": {
+    "videos_directory": "videos",
+    "variants_directory": "variants",
+    "output_directory": "analysis_output",
+    
+    "yolo_model": "yolov11n.pt",
+    "yolo_confidence_threshold": 0.5,
+    
+    "frame_analysis": {
+      "frame_skip": 10,
+      "blur_threshold": 100.0
+    },
+    
+    "downscaling": {
+      "enabled": true,
+      "variants": ["1080p", "720p", "480p"],
+      "heights": [1080, 720, 480]
+    },
+    
+    "ffmpeg_preset": "fast",
+    "ffmpeg_crf": 23,
+    "timeout_seconds": 300,
+    
+    "logging": {
+      "level": "INFO",
+      "format": "%(asctime)s - %(levelname)s - %(message)s"
+    }
+  },
+  
+  "quality_metrics": {
+    "sharpness": {
+      "description": "Laplacian variance (higher = sharper)",
+      "typical_range": [50, 500],
+      "acceptable_threshold": 100
+    },
+    "snr": {
+      "description": "Signal-to-Noise Ratio in dB",
+      "typical_range": [5, 30],
+      "acceptable_threshold": 10
+    },
+    "blur_detection": {
+      "description": "Laplacian variance < threshold = blurry",
+      "acceptable_blur_percentage": 10
+    },
+    "detections": {
+      "description": "YOLO object detections per frame",
+      "metric_types": ["count", "mean_confidence", "processing_time"]
+    }
+  },
+  
+  "output_formats": {
+    "per_video_json": {
+      "description": "Detailed analysis for each video",
+      "filename_pattern": "{video_name}_analysis.json",
+      "includes": ["metadata", "frame_level_data", "aggregated_statistics"]
+    },
+    "summary_csv": {
+      "description": "Summary table across all videos",
+      "filename": "analysis_summary.csv",
+      "columns": [
+        "video",
+        "variant", 
+        "resolution",
+        "fps",
+        "duration_s",
+        "filesize_mb",
+        "bitrate_mbps",
+        "avg_sharpness",
+        "snr_avg",
+        "blur_pct",
+        "avg_detections",
+        "avg_confidence",
+        "frames_no_detection",
+        "processing_time_avg_ms"
+      ]
+    }
+  },
+  
+  "recommended_settings": {
+    "fast_analysis": {
+      "description": "Quick overview, ~2-3 min per video",
+      "frame_skip": 30,
+      "model": "yolov11n.pt",
+      "blur_threshold": 150
+    },
+    "balanced_analysis": {
+      "description": "Balanced speed/accuracy, ~5-10 min per video",
+      "frame_skip": 10,
+      "model": "yolov11n.pt",
+      "blur_threshold": 100
+    },
+    "detailed_analysis": {
+      "description": "High detail, ~15-30 min per video",
+      "frame_skip": 5,
+      "model": "yolov11s.pt",
+      "blur_threshold": 80
+    },
+    "comprehensive_analysis": {
+      "description": "Maximum detail, ~1 hour+ per video",
+      "frame_skip": 1,
+      "model": "yolov11m.pt",
+      "blur_threshold": 80
+    }
+  }
+}
